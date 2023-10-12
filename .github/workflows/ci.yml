@@ -3,11 +3,7 @@ name: CI/CD Workflow
 on:
   push:
     branches:
-      - flower  # Specify the "flowers" branch here
-
-  pull_request:
-    branches:
-      - flower  # Specify the "flowers" branch here
+      - flower
 
 jobs:
   build:
@@ -16,14 +12,19 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
       with:
-        node-version: 14
+        path: src/test/java/flower/store
 
-    - name: Install dependencies
-      run: npm install
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'  # Specify the desired Java distribution
+        java-version: '17'  # Specify the desired Java version
+        cache: 'gradle'  # Optional: Use caching for Gradle, if applicable
+
+
+    - name: Build with Maven
+      run: mvn clean package
 
     - name: Run tests
-      run: npm test
+      run: mvn test
