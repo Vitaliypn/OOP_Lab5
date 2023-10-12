@@ -13,7 +13,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-        path: src/test/java/flower/store
+        path: pom.xml
 
     - name: Set up Java
       uses: actions/setup-java@v2
@@ -21,7 +21,6 @@ jobs:
         distribution: 'adopt'  # Specify the desired Java distribution
         java-version: '17'  # Specify the desired Java version
         cache: 'gradle'  # Optional: Use caching for Gradle, if applicable
-
 
     - name: Build with Maven
       run: mvn clean package
